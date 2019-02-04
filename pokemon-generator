@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # vars for you to adjust
-PICK_RANGE="1-386" # national dex number range pokemon will be picked from
+PICK_RANGE="1-386"
 ICON_LOCATION="./icons"
-ANIMATION_LENGTH=16 # frame count for one jump
-JUMP_HEIGHT=64 # jump height in pixels
-DOUBLE_FINISH_ANIMATION=false # will make the pokemon jump twice before booting
+ANIMATION_LENGTH=16
+JUMP_HEIGHT=64
+DOUBLE_FINISH_ANIMATION=false
 
 # don't change these pls
 TEMP_IMG="bulb.png"

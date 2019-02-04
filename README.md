@@ -2,6 +2,8 @@
 
 This script generates a `two-step` theme for Plymouth that shows a randomly chosen Pokemon jumping until the boot process is finished.
 
+Icons are from [oakdex-pokedex-sprites](https://github.com/jalyna/oakdex-pokedex-sprites/).
+
 ## Usage
 ```shell
 $ git clone https://github.com/realChesta/plymouth-pokemon.git
@@ -14,7 +16,7 @@ Use **`pokemon-generator -a`** to automatically copy the generated theme into th
 
 ## Configuration
 
-There are multiple variables that can easily be adjusted to tweak the functionality of the script:
+There are multiple variables in the script that can easily be adjusted to tweak its functionality:
 
 * `PICK_RANGE` is the range of National PokeDex numbers to be included in the Pokemon selection.
 * `ICON_LOCATION` determines where the the folder containing the icons is located.

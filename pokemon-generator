@@ -44,9 +44,6 @@ magick convert -size 256x256 xc:none "$EMPTY_IMG"
 ((OFFSET_W = 128 - $WIDTH / 2))
 ((OFFSET_H = 128 - $HEIGHT / 2))
 
-# OFFSET="+${OFFSET_W}+${OFFSET_H}"
-# echo $OFFSET
-
 test=$(magick convert bulb.png -scale 1x1\! -format '%[pixel:u]' info:-)
 reg=$(echo $test | grep -oP "\d+,\d+,\d+(?=,\d+)")
 reg=${reg//,/" "}

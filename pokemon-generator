@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# vars for you to adjust
 PICK_RANGE="1-386"
 ICON_LOCATION="./icons"
 ANIMATION_LENGTH=16
@@ -26,7 +27,6 @@ PARAB_A=$(bc -l <<< "scale=2;($JUMP_HEIGHT / ($VERTEX_X ^ 2))")
 echo $ICON_LOCATION
 
 # get path of pokemon
-
 POKE_NUM="$(shuf -i $PICK_RANGE -n 1)"
 printf -v POKE_NUM "%03d" $POKE_NUM
 
@@ -34,26 +34,29 @@ echo $POKE_NUM
 
 POKE_PATH="${ICON_LOCATION}/${POKE_NUM}.png"
 
+# resize and trim pokemon image 
 magick convert "$POKE_PATH" -interpolate Nearest -filter point -background none -resize 128x128 -trim "$TEMP_IMG"
 
 WIDTH="$(magick identify -ping -format '%w' $TEMP_IMG)"
 HEIGHT="$(magick identify -ping -format '%h' $TEMP_IMG)"
 
+# create empty canvas
 magick convert -size 256x256 xc:none "$EMPTY_IMG"
 
 ((OFFSET_W = 128 - $WIDTH / 2))
 ((OFFSET_H = 128 - $HEIGHT / 2))
 
-test=$(magick convert bulb.png -scale 1x1\! -format '%[pixel:u]' info:-)
+# get average color and convert it to hex
+test=$(magick convert "$TEMP_IMG" -scale 1x1\! -format '%[pixel:u]' info:-)
 reg=$(echo $test | grep -oP "\d+,\d+,\d+(?=,\d+)")
 reg=${reg//,/" "}
 HEX_COLOR=$(printf "0x%02x%02x%02x\n" $reg)
 
-
+# write .plymouth theme file
 cat <<EOT > "$OUTPUT/pokemon.plymouth"
 [Plymouth Theme]
 Name=Pokemon
-Description=Theme with a jumping Pokemon sprite
+Description=Theme with a jumping Pokemon $POKE_NUM sprite
 ModuleName=two-step
 
 [two-step]
@@ -66,12 +69,15 @@ BackgroundStartColor=$HEX_COLOR
 BackgroundEndColor=$HEX_COLOR
 EOT
 
+# generate frames
 for i in $(seq 0 $ANIMATION_LENGTH)
     do
+        # calc jump pos at current frame
         C_F=$(bc <<< "((-$PARAB_A * ($i - $VERTEX_X) ^ 2) + $JUMP_HEIGHT) / 1")
         ((POS_Y = $OFFSET_H - $C_F))
         OFFSET="+${OFFSET_W}+${POS_Y}"
         printf -v fi "%04d" $i
+        # put pokemon img on canvas at calculated pos
         magick composite -geometry "$OFFSET" "$TEMP_IMG" "$EMPTY_IMG" "${OUTPUT}/throbber-${fi}.png"
         cp "${OUTPUT}/throbber-${fi}.png" "${OUTPUT}/animation-${fi}.png"
         if [ "$DOUBLE_FINISH_ANIMATION" = true ]; then
@@ -84,12 +90,14 @@ for i in $(seq 0 $ANIMATION_LENGTH)
 rm "$TEMP_IMG"
 rm "$EMPTY_IMG"
 
+# add other needed files
 SPINNER_DIR="/usr/share/plymouth/themes/spinner/"
 cp "$SPINNER_DIR/box.png" "$OUTPUT"
 cp "$SPINNER_DIR/bullet.png" "$OUTPUT"
 cp "$SPINNER_DIR/lock.png" "$OUTPUT"
 cp "$SPINNER_DIR/entry.png" "$OUTPUT"
 
+# copy and apply the theme if option is given
 if [ "$1" != "-a" ]; then
     exit
 fi

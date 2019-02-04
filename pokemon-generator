@@ -21,10 +21,9 @@ fi
 rm -rf "$OUTPUT"
 mkdir -p "$OUTPUT"
 
+# calculate parabola vars for jump
 VERTEX_X=$(($ANIMATION_LENGTH / 2))
 PARAB_A=$(bc -l <<< "scale=2;($JUMP_HEIGHT / ($VERTEX_X ^ 2))")
-
-echo $ICON_LOCATION
 
 # get path of pokemon
 POKE_NUM="$(shuf -i $PICK_RANGE -n 1)"

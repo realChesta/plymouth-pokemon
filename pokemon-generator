@@ -12,11 +12,25 @@ TEMP_IMG="bulb.png"
 EMPTY_IMG="transparent.png"
 OUTPUT="./out"
 
-
 if [ "$EUID" -ne 0 ]; then 
     echo "Please run as root."
     exit
 fi
+
+while [ -n "$1" ]; do
+    case "$1" in
+    -u) 
+        UPDATE_PLY=true
+        ;;
+    -k) 
+        KEEP_TEMP=true
+        ;;
+    *) 
+        echo "Option $1 not recognized!"
+        ;;
+    esac
+    shift
+done
 
 rm -rf "$OUTPUT"
 mkdir -p "$OUTPUT"
@@ -86,7 +100,10 @@ for i in $(seq 0 $ANIMATION_LENGTH)
         fi
     done
 
-rm "$TEMP_IMG"
+
+if [ $KEEP_TEMP != true ]; then
+    rm "$TEMP_IMG"
+fi
 rm "$EMPTY_IMG"
 
 # add other needed files
@@ -97,7 +114,7 @@ cp "$SPINNER_DIR/lock.png" "$OUTPUT"
 cp "$SPINNER_DIR/entry.png" "$OUTPUT"
 
 # copy and apply the theme if option is given
-if [ "$1" != "-a" ]; then
+if [ "$UPDATE_PLY" != true ]; then
     exit
 fi
 

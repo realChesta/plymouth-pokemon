@@ -12,11 +12,13 @@ $ sudo sh pokemon-generator
 ```
 *(`pokemon-generator` has to be run with elevated privileges.)*
 
-Use **`pokemon-generator -a`** to automatically copy the generated theme into the themes directory and update the plymouth configuration. 
+Use **`pokemon-generator -u`** to automatically copy the generated theme into the themes directory and update the plymouth configuration. 
+
+The option `-k` instructs the script to **k**eep the temporarily created resized pokemon image (`$TEMP_IMG`).
 
 ### Suggestion
 
-Run `pokemon-generator -a` once per boot and enjoy a new Pokemon every time you boot!
+Run `pokemon-generator -u` once per boot and enjoy a new Pokemon every time you boot!
 
 ## Configuration
 

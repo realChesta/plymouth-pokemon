@@ -12,6 +12,9 @@ TEMP_IMG="bulb.png"
 EMPTY_IMG="transparent.png"
 OUTPUT="./out"
 
+TEMP_IMG="$OUTPUT/$TEMP_IMG"
+EMPTY_IMG="$OUTPUT/$EMPTY_IMG"
+
 if [ "$EUID" -ne 0 ]; then 
     echo "Please run as root."
     exit

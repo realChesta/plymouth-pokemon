@@ -47,6 +47,7 @@ POKE_NUM="$(shuf -i $PICK_RANGE -n 1)"
 printf -v POKE_NUM "%03d" $POKE_NUM
 
 echo $POKE_NUM
+echo $POKE_NUM > "$OUTPUT/pokenum.txt"
 
 POKE_PATH="${ICON_LOCATION}/${POKE_NUM}.png"
 
@@ -104,7 +105,7 @@ for i in $(seq 0 $ANIMATION_LENGTH)
     done
 
 
-if [ $KEEP_TEMP != true ]; then
+if [ "$KEEP_TEMP" != true ]; then
     rm "$TEMP_IMG"
 fi
 rm "$EMPTY_IMG"

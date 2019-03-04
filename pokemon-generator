@@ -28,6 +28,9 @@ while [ -n "$1" ]; do
     -k) 
         KEEP_TEMP=true
         ;;
+    -p) 
+        KEEP_PREV=true
+        ;;
     *) 
         echo "Option $1 not recognized!"
         ;;
@@ -116,6 +119,11 @@ cp "$SPINNER_DIR/box.png" "$OUTPUT"
 cp "$SPINNER_DIR/bullet.png" "$OUTPUT"
 cp "$SPINNER_DIR/lock.png" "$OUTPUT"
 cp "$SPINNER_DIR/entry.png" "$OUTPUT"
+
+# copy old file if option is given
+if [ "$KEEP_PREV" = true ]; then
+    cp "/usr/share/plymouth/themes/pokemon/pokenum.txt" "$OUTPUT/pokenum-prev.txt"
+fi
 
 # copy and apply the theme if option is given
 if [ "$UPDATE_PLY" != true ]; then

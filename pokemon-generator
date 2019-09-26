@@ -98,7 +98,7 @@ for i in $(seq 0 $ANIMATION_LENGTH)
         OFFSET="+${OFFSET_W}+${POS_Y}"
         printf -v fi "%04d" $i
         # put pokemon img on canvas at calculated pos
-        magick composite -geometry "$OFFSET" "$TEMP_IMG" "$EMPTY_IMG" "${OUTPUT}/throbber-${fi}.png"
+        magick composite -colorspace sRGB -geometry "$OFFSET" "$TEMP_IMG" "$EMPTY_IMG" "${OUTPUT}/throbber-${fi}.png"
         cp "${OUTPUT}/throbber-${fi}.png" "${OUTPUT}/animation-${fi}.png"
         if [ "$DOUBLE_FINISH_ANIMATION" = true ]; then
             ((ni = $ANIMATION_LENGTH + $i))

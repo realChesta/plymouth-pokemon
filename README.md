@@ -16,6 +16,8 @@ Use **`pokemon-generator -u`** to automatically copy the generated theme into th
 
 The option `-k` instructs the script to **k**eep the temporarily created resized pokemon image (`$TEMP_IMG`).
 
+The option `-p` makes the script keep a `pokenum-prev.txt` file containing the number of the previousy generated Pokemon.
+
 ### Suggestion
 
 Run `pokemon-generator -u` once per boot and enjoy a new Pokemon every time you boot!

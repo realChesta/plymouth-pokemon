@@ -67,7 +67,7 @@ magick convert -size 256x256 xc:none "$EMPTY_IMG"
 ((OFFSET_H = 128 - $HEIGHT / 2))
 
 # get average color and convert it to hex
-test=$(magick convert "$TEMP_IMG" -scale 1x1\! format "%[fx:int(255*r+.5)],%[fx:int(255*g+.5)],%[fx:int(255*b+.5)]" info:-)
+test=$(magick convert "$TEMP_IMG" -scale 1x1\! -format "%[fx:int(255*r+.5)],%[fx:int(255*g+.5)],%[fx:int(255*b+.5)]" info:-)
 reg=${test//,/" "}
 HEX_COLOR=$(printf "0x%02x%02x%02x\n" $reg)
 
